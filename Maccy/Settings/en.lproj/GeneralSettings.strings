@@ -1,7 +1,5 @@
 "Title" = "General";
 "LaunchAtLogin" = "Launch at login";
-"CheckForUpdates" = "Check for updates automatically";
-"CheckNow" = "Check now";
 "Open" = "Open:";
 "OpenTooltip" = "Global shortcut key to open application.\nA repeated press of the main key while holding modifiers will select the next item in the list. In this mode, releasing modifier keys will confirm selection and close the popup.\nDefault: ⇧⌘C.";
 "Pin" = "Pin:";
@@ -20,3 +18,8 @@
 "Regex" = "Regular expressions";
 "Mixed" = "Mixed";
 "NotificationsAndSounds" = "Notifications and sounds 􀱁";
+"SMSCodeHelper" = "SMS code helper:";
+"SMSCodeWebhookPlaceholder" = "https://example.com/webhook/latest_sms.txt";
+"SMSCodeWebhookDescription" = "Paste the webhook URL that returns the latest SMS text. The code will be extracted and copied into Maccy.";
+"SMSCodeFetchNow" = "Fetch now";
+"SMSCodeFetchShortcut" = "Fetch shortcut:";

@@ -28,3 +28,14 @@
 "system_settings_pane" = "Privacy & Security settings";
 "system_preferences_name" = "System Preferences";
 "system_preferences_pane" = "Security & Privacy preferences";
+"get_verification_code" = "Get verification code";
+"get_verification_code_fetching" = "Fetching verification code...";
+"sms_code_missing_webhook" = "Please set a webhook URL in Settings first.";
+"sms_code_invalid_webhook" = "The webhook URL is invalid.";
+"sms_code_fetch_failed" = "Failed to fetch verification code: %@";
+"sms_code_fetch_failed_short" = "Failed to fetch code";
+"sms_code_http_error" = "Server returned an error: HTTP %ld";
+"sms_code_invalid_response" = "The server response is not valid.";
+"sms_code_empty_response" = "The server returned an empty response.";
+"sms_code_unrecognized" = "Fetched content did not contain a verification code.";
+"sms_code_copied" = "Verification code %@ has been copied to the clipboard.";

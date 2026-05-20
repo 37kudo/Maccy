@@ -1,11 +1,12 @@
 import AppKit
 import Defaults
 import Foundation
+import KeyboardShortcuts
 import Settings
 import SwiftUI
 
 @Observable
-class AppState: Sendable {
+final class AppState: Sendable {
   static let shared = AppState(history: History.shared, footer: Footer())
 
   let multiSelectionEnabled = false
@@ -14,6 +15,7 @@ class AppState: Sendable {
   var popup: Popup
   var history: History
   var footer: Footer
+  let smsCodeHelper: SMSCodeHelper
   var navigator: NavigationManager
   var preview: SlideoutController
 
@@ -40,15 +42,27 @@ class AppState: Sendable {
     self.footer = footer
     popup = Popup()
     navigator = NavigationManager(history: history, footer: footer)
+    let helper = SMSCodeHelper()
+    smsCodeHelper = helper
+    KeyboardShortcuts.onKeyDown(for: .fetchSMSCode) { [weak helper] in
+      helper?.fetchCode()
+    }
     preview = SlideoutController(
       onContentResize: { contentWidth in
         Defaults[.windowSize].width = contentWidth
       },
       onSlideoutResize: { previewWidth in
         Defaults[.previewWidth] = previewWidth
-      })
+      }
+    )
     preview.contentWidth = Defaults[.windowSize].width
     preview.slideoutWidth = Defaults[.previewWidth]
+
+    let smsCodeItem = FooterItem(title: "get_verification_code") { [weak helper] in
+      helper?.fetchCode()
+    }
+    helper.footerItem = smsCodeItem
+    footer.items.insert(smsCodeItem, at: 2)
   }
 
   @MainActor

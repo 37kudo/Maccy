@@ -1,7 +1,5 @@
 "Title" = "通用";
 "LaunchAtLogin" = "登录时启动";
-"CheckForUpdates" = "自动检查更新";
-"CheckNow" = "检查更新";
 "Open" = "打开：";
 "OpenTooltip" = "打开应用程序的全局快捷键。\n在按住修改器的同时重复按下主键将选择列表中的下一个项目。在这种模式下，松开修改器键将确认选择并关闭弹出窗口。\n默认： %@C。";
 "Pin" = "固定：";
@@ -20,3 +18,8 @@
 "Regex" = "正则表达式";
 "Mixed" = "混合";
 "NotificationsAndSounds" = "通知和声音 􀱁";
+"SMSCodeHelper" = "验证码助手：";
+"SMSCodeWebhookPlaceholder" = "https://example.com/webhook/latest_sms.txt";
+"SMSCodeWebhookDescription" = "粘贴返回最新短信文本的 webhook 地址。程序会自动提取验证码并写入 Maccy。";
+"SMSCodeFetchNow" = "立即获取";
+"SMSCodeFetchShortcut" = "获取快捷键：";
