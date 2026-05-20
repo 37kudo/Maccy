@@ -18,6 +18,12 @@
 "Regex" = "正则表达式";
 "Mixed" = "混合";
 "NotificationsAndSounds" = "通知和声音 􀱁";
+"SyncClipboardCloud" = "云端同步：";
+"SyncClipboardCloudEnabled" = "将文本剪贴板上传到 SyncClipboard";
+"SyncClipboardCloudURLPlaceholder" = "http://server:port";
+"SyncClipboardCloudUsername" = "用户名";
+"SyncClipboardCloudPassword" = "密码";
+"SyncClipboardCloudDescription" = "开启后，本机新复制的文本内容会自动上传到 SyncClipboard 服务器。";
 "SMSCodeHelper" = "验证码助手：";
 "SMSCodeWebhookPlaceholder" = "https://example.com/webhook/latest_sms.txt";
 "SMSCodeWebhookDescription" = "粘贴返回最新短信文本的 webhook 地址。程序会自动提取验证码并写入 Maccy。";

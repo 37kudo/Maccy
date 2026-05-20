@@ -25,8 +25,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   func applicationWillFinishLaunching(_ notification: Notification) { // swiftlint:disable:this function_body_length
     // Bridge FloatingPanel via AppDelegate.
     AppState.shared.appDelegate = self
+    migrateSyncClipboardCloudDefaults()
 
-    Clipboard.shared.onNewCopy { History.shared.add($0) }
+    Clipboard.shared.onNewCopy {
+      SyncClipboardCloudSync.shared.upload($0)
+      History.shared.add($0)
+    }
     Clipboard.shared.start()
 
     Task {
@@ -156,6 +160,32 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         self.synchronizeMenuIconText()
       }
+    }
+  }
+
+  private func migrateSyncClipboardCloudDefaults() {
+    guard let externalDefaults = UserDefaults.standard.persistentDomain(forName: "org.p0deje.Maccy") else {
+      return
+    }
+
+    if UserDefaults.standard.object(forKey: "syncClipboardCloudEnabled") == nil,
+       let enabled = externalDefaults["syncClipboardCloudEnabled"] as? Bool {
+      Defaults[.syncClipboardCloudEnabled] = enabled
+    }
+
+    if UserDefaults.standard.string(forKey: "syncClipboardCloudURL") == nil,
+       let url = externalDefaults["syncClipboardCloudURL"] as? String {
+      Defaults[.syncClipboardCloudURL] = url
+    }
+
+    if UserDefaults.standard.string(forKey: "syncClipboardCloudUsername") == nil,
+       let username = externalDefaults["syncClipboardCloudUsername"] as? String {
+      Defaults[.syncClipboardCloudUsername] = username
+    }
+
+    if UserDefaults.standard.string(forKey: "syncClipboardCloudPassword") == nil,
+       let password = externalDefaults["syncClipboardCloudPassword"] as? String {
+      Defaults[.syncClipboardCloudPassword] = password
     }
   }
 

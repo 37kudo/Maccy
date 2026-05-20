@@ -16,6 +16,9 @@ struct GeneralSettingsPane: View {
   @State private var pasteWithoutFormatting = HistoryItemAction.pasteWithoutFormatting.modifierFlags.description
 
   @Default(.smsCodeWebhookURL) private var smsCodeWebhookURL
+  @Default(.syncClipboardCloudURL) private var syncClipboardCloudURL
+  @Default(.syncClipboardCloudUsername) private var syncClipboardCloudUsername
+  @Default(.syncClipboardCloudPassword) private var syncClipboardCloudPassword
 
   var body: some View {
     Settings.Container(contentWidth: 450) {
@@ -98,6 +101,44 @@ struct GeneralSettingsPane: View {
           Link(destination: notificationsURL, label: {
             Text("NotificationsAndSounds", tableName: "GeneralSettings")
           })
+        }
+      }
+
+      Settings.Section(
+        bottomDivider: true,
+        label: { Text("SyncClipboardCloud", tableName: "GeneralSettings") }
+      ) {
+        VStack(alignment: .leading, spacing: 10) {
+          Defaults.Toggle(key: .syncClipboardCloudEnabled) {
+            Text("SyncClipboardCloudEnabled", tableName: "GeneralSettings")
+          }
+          .fixedSize()
+
+          TextField(
+            "",
+            text: $syncClipboardCloudURL,
+            prompt: Text("SyncClipboardCloudURLPlaceholder", tableName: "GeneralSettings")
+          )
+          .frame(width: 320)
+
+          TextField(
+            "",
+            text: $syncClipboardCloudUsername,
+            prompt: Text("SyncClipboardCloudUsername", tableName: "GeneralSettings")
+          )
+          .frame(width: 220)
+
+          SecureField(
+            "",
+            text: $syncClipboardCloudPassword,
+            prompt: Text("SyncClipboardCloudPassword", tableName: "GeneralSettings")
+          )
+          .frame(width: 220)
+
+          Text("SyncClipboardCloudDescription", tableName: "GeneralSettings")
+            .fixedSize(horizontal: false, vertical: true)
+            .foregroundStyle(.gray)
+            .controlSize(.small)
         }
       }
 

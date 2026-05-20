@@ -18,6 +18,12 @@
 "Regex" = "Regular expressions";
 "Mixed" = "Mixed";
 "NotificationsAndSounds" = "Notifications and sounds 􀱁";
+"SyncClipboardCloud" = "Cloud sync:";
+"SyncClipboardCloudEnabled" = "Upload text clipboard to SyncClipboard";
+"SyncClipboardCloudURLPlaceholder" = "http://server:port";
+"SyncClipboardCloudUsername" = "Username";
+"SyncClipboardCloudPassword" = "Password";
+"SyncClipboardCloudDescription" = "When enabled, new local text clipboard content is uploaded to the SyncClipboard server automatically.";
 "SMSCodeHelper" = "SMS code helper:";
 "SMSCodeWebhookPlaceholder" = "https://example.com/webhook/latest_sms.txt";
 "SMSCodeWebhookDescription" = "Paste the webhook URL that returns the latest SMS text. The code will be extracted and copied into Maccy.";
