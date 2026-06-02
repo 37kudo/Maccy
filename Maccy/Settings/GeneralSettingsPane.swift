@@ -15,7 +15,10 @@ struct GeneralSettingsPane: View {
   @State private var pasteModifier = HistoryItemAction.paste.modifierFlags.description
   @State private var pasteWithoutFormatting = HistoryItemAction.pasteWithoutFormatting.modifierFlags.description
 
-  @State private var updater = SoftwareUpdater()
+  @Default(.smsCodeWebhookURL) private var smsCodeWebhookURL
+  @Default(.syncClipboardCloudURL) private var syncClipboardCloudURL
+  @Default(.syncClipboardCloudUsername) private var syncClipboardCloudUsername
+  @Default(.syncClipboardCloudPassword) private var syncClipboardCloudPassword
 
   var body: some View {
     Settings.Container(contentWidth: 450) {
@@ -23,13 +26,6 @@ struct GeneralSettingsPane: View {
         LaunchAtLogin.Toggle {
           Text("LaunchAtLogin", tableName: "GeneralSettings")
         }
-        Toggle(isOn: $updater.automaticallyChecksForUpdates) {
-          Text("CheckForUpdates", tableName: "GeneralSettings")
-        }
-        Button(
-          action: { updater.checkForUpdates() },
-          label: { Text("CheckNow", tableName: "GeneralSettings") }
-        )
       }
 
       Settings.Section(label: { Text("Open", tableName: "GeneralSettings") }) {
@@ -105,6 +101,78 @@ struct GeneralSettingsPane: View {
           Link(destination: notificationsURL, label: {
             Text("NotificationsAndSounds", tableName: "GeneralSettings")
           })
+        }
+      }
+
+      Settings.Section(
+        bottomDivider: true,
+        label: { Text("SyncClipboardCloud", tableName: "GeneralSettings") }
+      ) {
+        VStack(alignment: .leading, spacing: 10) {
+          Defaults.Toggle(key: .syncClipboardCloudEnabled) {
+            Text("SyncClipboardCloudEnabled", tableName: "GeneralSettings")
+          }
+          .fixedSize()
+
+          TextField(
+            "",
+            text: $syncClipboardCloudURL,
+            prompt: Text("SyncClipboardCloudURLPlaceholder", tableName: "GeneralSettings")
+          )
+          .frame(width: 320)
+
+          TextField(
+            "",
+            text: $syncClipboardCloudUsername,
+            prompt: Text("SyncClipboardCloudUsername", tableName: "GeneralSettings")
+          )
+          .frame(width: 220)
+
+          SecureField(
+            "",
+            text: $syncClipboardCloudPassword,
+            prompt: Text("SyncClipboardCloudPassword", tableName: "GeneralSettings")
+          )
+          .frame(width: 220)
+
+          Text("SyncClipboardCloudDescription", tableName: "GeneralSettings")
+            .fixedSize(horizontal: false, vertical: true)
+            .foregroundStyle(.gray)
+            .controlSize(.small)
+        }
+      }
+
+      Settings.Section(
+        bottomDivider: true,
+        label: { Text("SMSCodeHelper", tableName: "GeneralSettings") }
+      ) {
+        VStack(alignment: .leading, spacing: 10) {
+          HStack(alignment: .center, spacing: 10) {
+            TextField(
+              "",
+              text: $smsCodeWebhookURL,
+              prompt: Text("SMSCodeWebhookPlaceholder", tableName: "GeneralSettings")
+            )
+            .frame(width: 320)
+
+            Button {
+              AppState.shared.smsCodeHelper.fetchCode()
+            } label: {
+              Image(systemName: "arrow.clockwise")
+            }
+            .buttonStyle(.borderless)
+            .help(Text("SMSCodeFetchNow", tableName: "GeneralSettings"))
+          }
+
+          Text("SMSCodeWebhookDescription", tableName: "GeneralSettings")
+            .fixedSize(horizontal: false, vertical: true)
+            .foregroundStyle(.gray)
+            .controlSize(.small)
+
+          HStack(alignment: .center, spacing: 10) {
+            Text("SMSCodeFetchShortcut", tableName: "GeneralSettings")
+            KeyboardShortcuts.Recorder(for: .fetchSMSCode)
+          }
         }
       }
     }
