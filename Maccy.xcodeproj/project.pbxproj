@@ -890,6 +890,7 @@
 				DAEE383F1E3DBEB100DD2966 /* Sources */,
 				DAEE38401E3DBEB100DD2966 /* Frameworks */,
 				DAEE38411E3DBEB100DD2966 /* Resources */,
+				DADC11A12FD1000100A1B001 /* Embed Cling App */,
 				DAAAAB942C7664A2004FBC3C /* Embed Frameworks */,
 			);
 			buildRules = (
@@ -1038,6 +1039,30 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		DADC11A12FD1000100A1B001 /* Embed Cling App */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"/Users/kudo/Desktop/Mixed/Cling/dist/Cling.app",
+			);
+			name = "Embed Cling App";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/Cling.app",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\nCLING_APP=\"/Users/kudo/Desktop/Mixed/Cling/dist/Cling.app\"\nDEST=\"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Cling.app\"\nif [ ! -d \"$CLING_APP\" ]; then\n  echo \"error: Cling.app not found at $CLING_APP. Build Cling first.\"\n  exit 1\nfi\nrm -rf \"$DEST\"\nmkdir -p \"$(dirname \"$DEST\")\"\n/usr/bin/ditto \"$CLING_APP\" \"$DEST\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		DA0EE7B2204657830025FC60 /* Sources */ = {
