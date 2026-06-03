@@ -366,10 +366,11 @@ private final class NotebookLMUploaderController: NSObject {
 
   @objc
   private func openCling() {
-    let bundledCling = Bundle.main.url(forResource: "Cling", withExtension: "app")
+    let bundledCling = Bundle.main.resourceURL?.appendingPathComponent("Cling.app", isDirectory: true)
     let developmentCling = URL(fileURLWithPath: "/Users/kudo/Desktop/Mixed/Cling/dist/Cling.app")
 
-    guard let clingURL = bundledCling ?? (FileManager.default.fileExists(atPath: developmentCling.path) ? developmentCling : nil) else {
+    let bundledClingExists = bundledCling.map { FileManager.default.fileExists(atPath: $0.path) } ?? false
+    guard let clingURL = bundledClingExists ? bundledCling : (FileManager.default.fileExists(atPath: developmentCling.path) ? developmentCling : nil) else {
       NSAlert(error: NSError(
         domain: "MaccyClingIntegration",
         code: 1,
@@ -378,7 +379,22 @@ private final class NotebookLMUploaderController: NSObject {
       return
     }
 
-    NSWorkspace.shared.openApplication(at: clingURL, configuration: NSWorkspace.OpenConfiguration())
+    for app in NSRunningApplication.runningApplications(withBundleIdentifier: "com.lowtechguys.Cling") {
+      app.terminate()
+    }
+
+    DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+      let configuration = NSWorkspace.OpenConfiguration()
+      configuration.activates = true
+      configuration.createsNewApplicationInstance = true
+      NSWorkspace.shared.openApplication(at: clingURL, configuration: configuration) { app, error in
+        if let error {
+          NSAlert(error: error).runModal()
+          return
+        }
+        app?.activate(options: [.activateAllWindows, .activateIgnoringOtherApps])
+      }
+    }
   }
 
   @objc
